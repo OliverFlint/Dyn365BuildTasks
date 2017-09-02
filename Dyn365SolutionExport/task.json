@@ -1,0 +1,96 @@
+{
+  "id": "2007e0c0-8465-11e7-877a-4b139e4565f7",
+  "name": "Dyn365SolutionExport",
+  "friendlyName": "Dynamics 365 Solution Export",
+  "description": "Export Dynamics 365 Solutions",
+  "author": "Oliver Flint",
+  "helpMarkDown": "Export Dynamics 365 Solutions",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "0",
+    "Minor": "1",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "Dyn365SolutionExport $(message)",
+  "inputs": [
+    {
+      "name": "cwd",
+      "type": "filePath",
+      "label": "Working Directory",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Current working directory when Dyn365SolutionExport is run."
+    },
+    {
+      "name": "auth",
+      "type": "radio",
+      "label": "Authentication Type",
+      "defaultValue": "Office365",
+      "required": true,
+      "helpMarkDown": "Dynamics 365 Authentication Type",
+      "options": {
+        "AD": "Active Directory",
+        "Office365": "Office 365"
+      }
+    },
+    {
+      "name": "url",
+      "type": "string",
+      "label": "Org Url",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Dynamics 365 Organisation Url"
+    },
+    {
+      "name": "usn",
+      "type": "string",
+      "label": "Username",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Dynamics 365 Organisation Username"
+    },
+    {
+      "name": "pwd",
+      "type": "password",
+      "label": "Password",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Dynamics 365 Organisation Passowrd"
+    },
+    {
+      "name": "dmn",
+      "type": "string",
+      "label": "Domain",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Dynamics 365 Organisation Domain"
+    },
+    {
+      "name": "sln",
+      "type": "string",
+      "label": "Solution Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Dynamics 365 Solution Name"
+    },
+    {
+      "name": "fln",
+      "type": "string",
+      "label": "Solution Filename",
+      "defaultValue": "solution.zip",
+      "required": true,
+      "helpMarkDown": "Dynamics 365 Solution Filename"
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "sample.ps1"
+    }
+  }
+}
