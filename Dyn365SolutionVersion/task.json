@@ -119,7 +119,7 @@
   ],
   "execution": {
     "PowerShell3": {
-      "target": "sample.ps1"
+      "target": "SolutionVersion.ps1"
     }
   }
 }

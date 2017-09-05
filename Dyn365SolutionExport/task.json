@@ -86,11 +86,113 @@
       "defaultValue": "solution.zip",
       "required": true,
       "helpMarkDown": "Dynamics 365 Solution Filename"
+    },
+    {
+      "name": "mng",
+      "type": "boolean",
+      "label": "Managed?",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Export as managed solution?"
+    },
+    {
+      "name": "tvr",
+      "type": "picklist",
+      "label": "Target Version",
+      "defaultValue": "Default",
+      "required": false,
+      "helpMarkDown": "Export target version",
+      "options": {
+        "null": "Default",
+        "8.0": "8.0",
+        "8.1": "8.1",
+        "8.2": "8.2"
+      }
+    },
+    {
+      "name": "ans",
+      "type": "boolean",
+      "label": "Autonumber Settings?",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Export Auto Number Settings?"
+    },
+    {
+      "name": "cal",
+      "type": "boolean",
+      "label": "Calendar Settings?",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Export Calendar Settings?"
+    },
+    {
+      "name": "cms",
+      "type": "boolean",
+      "label": "Customization Settings?",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Export Customization Settings?"
+    },
+    {
+      "name": "ets",
+      "type": "boolean",
+      "label": "Email Tracking Settings?",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Export Email Tracking Settings?"
+    },
+    {
+      "name": "gen",
+      "type": "boolean",
+      "label": "General Settings?",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Export General Settings?"
+    },
+    {
+      "name": "mks",
+      "type": "boolean",
+      "label": "Marketing Settings?",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Export Marketing Settings?"
+    },
+    {
+      "name": "oss",
+      "type": "boolean",
+      "label": "Outlook Synchronization Settings?",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Export Outlook Synchronization Settings?"
+    },
+    {
+      "name": "rol",
+      "type": "boolean",
+      "label": "Relationship Roles?",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Export Relationship Roles?"
+    },
+    {
+      "name": "isv",
+      "type": "boolean",
+      "label": "ISV Config?",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Export ISV Config?"
+    },
+    {
+      "name": "sal",
+      "type": "boolean",
+      "label": "Sales Settings?",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Export Sales Settings?"
     }
   ],
   "execution": {
     "PowerShell3": {
-      "target": "sample.ps1"
+      "target": "SolutionExport.ps1"
     }
   }
 }

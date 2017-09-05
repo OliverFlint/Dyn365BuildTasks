@@ -1,0 +1,72 @@
+{
+  "id": "bdeda48b-674f-48b9-b055-1507c9ef2484",
+  "name": "Dyn365PublishAll",
+  "friendlyName": "Dynamics 365 Publish All Customizations",
+  "description": "Publish all Dynamics 365 Customizations",
+  "author": "Oliver Flint",
+  "helpMarkDown": "Publish all Dynamics 365 Customizations",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "0",
+    "Minor": "1",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "Dyn365PublishAll $(message)",
+  "inputs": [
+    {
+      "name": "auth",
+      "type": "radio",
+      "label": "Authentication Type",
+      "defaultValue": "Office365",
+      "required": true,
+      "helpMarkDown": "Dynamics 365 Authentication Type",
+      "options": {
+        "AD": "Active Directory",
+        "Office365": "Office 365"
+      }
+    },
+    {
+      "name": "url",
+      "type": "string",
+      "label": "Org Url",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Dynamics 365 Organisation Url"
+    },
+    {
+      "name": "usn",
+      "type": "string",
+      "label": "Username",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Dynamics 365 Organisation Username"
+    },
+    {
+      "name": "pwd",
+      "type": "password",
+      "label": "Password",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Dynamics 365 Organisation Passowrd"
+    },
+    {
+      "name": "dmn",
+      "type": "string",
+      "label": "Domain",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Dynamics 365 Organisation Domain"
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "PublishAll.ps1"
+    }
+  }
+}
