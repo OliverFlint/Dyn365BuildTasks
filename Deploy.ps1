@@ -3,15 +3,33 @@ Param(
     # Parameter help description
     [Parameter(Mandatory=$false)]
     [switch]
-    $ReDeploy
+    $ReDeploy,
+    # Parameter help description
+    [Parameter(Mandatory=$false)]
+    [string]
+    $TaskName
 )
 
-if($ReDeploy) {
-    Invoke-Expression "tfx build tasks delete --task-id 2007e0c0-8465-11e7-877a-4b139e4565f7"
-    Invoke-Expression "tfx build tasks delete --task-id 19e5ecc0-8ab2-11e7-b763-79549c856ef7"
-    Invoke-Expression "tfx build tasks delete --task-id bdeda48b-674f-48b9-b055-1507c9ef2484"
+function DeployTask ($taskName) {
+    $jsonObj = (Get-Content ".\$taskName\task.json") -join "`n" | ConvertFrom-Json
+    $taskId = $jsonObj.Id
+    $taskfriendlyName = $jsonObj.friendlyName
+    if($ReDeploy){
+        Write-Host "Deleteing task $taskfriendlyName"
+        Invoke-Expression "tfx build tasks delete --task-id $taskId"
+    }
+    
+    Write-Host "Uploading task $taskfriendlyName"
+    Invoke-Expression "tfx build tasks upload --task-path ./$taskName"
 }
 
-Invoke-Expression "tfx build tasks upload --task-path ./Dyn365SolutionVersion"
-Invoke-Expression "tfx build tasks upload --task-path ./Dyn365SolutionExport"
-Invoke-Expression "tfx build tasks upload --task-path ./Dyn365PublishAll"
+Get-ChildItem -Directory | ForEach-Object -Process {
+    if($TaskName){
+        if($_.Name -eq $TaskName){
+            DeployTask($TaskName)
+        }
+    }else{
+        DeployTask($_.Name)
+    }
+}
+
