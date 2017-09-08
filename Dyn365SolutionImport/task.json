@@ -98,10 +98,18 @@
     {
       "name": "ovw",
       "type": "boolean",
-      "label": "Overwrite?",
+      "label": "Overwrite Customizations?",
       "defaultValue": "false",
       "required": false,
       "helpMarkDown": "Overwrite Managed Customizations?"
+    },
+    {
+      "name": "skp",
+      "type": "boolean",
+      "label": "Skip if already exists?",
+      "defaultValue": "true",
+      "required": false,
+      "helpMarkDown": "Skip if the solution is already installed and is the same version"
     }
   ],
   "execution": {
