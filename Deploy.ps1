@@ -13,14 +13,16 @@ Param(
 function DeployTask ($taskName) {
     $jsonObj = (Get-Content ".\$taskName\task.json") -join "`n" | ConvertFrom-Json
     $taskId = $jsonObj.Id
-    $taskfriendlyName = $jsonObj.friendlyName
-    if($ReDeploy){
-        Write-Host "Deleteing task $taskfriendlyName"
-        Invoke-Expression "tfx build tasks delete --task-id $taskId"
+    if($taskId) {
+        $taskfriendlyName = $jsonObj.friendlyName
+        if($ReDeploy){
+            Write-Host "Deleteing task $taskfriendlyName"
+            Invoke-Expression "tfx build tasks delete --task-id $taskId"
+        }
+        
+        Write-Host "Uploading task $taskfriendlyName"
+        Invoke-Expression "tfx build tasks upload --task-path ./$taskName"
     }
-    
-    Write-Host "Uploading task $taskfriendlyName"
-    Invoke-Expression "tfx build tasks upload --task-path ./$taskName"
 }
 
 Get-ChildItem -Directory | ForEach-Object -Process {
@@ -29,7 +31,9 @@ Get-ChildItem -Directory | ForEach-Object -Process {
             DeployTask($TaskName)
         }
     }else{
-        DeployTask($_.Name)
+        if($_.Name -ne "docs") {
+            DeployTask($_.Name)
+        }
     }
 }
 
