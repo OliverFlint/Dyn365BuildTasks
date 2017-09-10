@@ -34,37 +34,45 @@ try {
         $action = $row.action.ToLower()
         $entity = $row.entity.ToLower()
         
-        $record = @{}
+        $record = [hashtable]@{}
         $attributes | ForEach-Object {
             $record."$_" = $row."$_"
         }
         $pkfield = $entity + "id"
-        [guid]$id = [guid]$record."$pkfield"
+        $id = [guid]$record."$pkfield"
         $record."$pkfield" = [guid]$id
 
         Write-Host "Executing action `"$action`" on $entity with id `"$id`""
 
         try{
             if($action -eq "create") {
-                New-CrmRecord -conn $conn -Fields $record -EntityLogicalName $entity
+                $result = New-CrmRecord -conn $conn -Fields $record -EntityLogicalName $entity
             }
 
             if($action -eq "upsert") {
-                $record.Remove($record[$pkfield])
-                Set-CrmRecord -conn $conn -EntityLogicalName $entity -Id $id -Fields $record -Upsert -Verbose
+                $result = $null
+                try {
+                    $result = Get-CrmRecord -conn $conn -EntityLogicalName $entity -Id $id -Fields $pkfield -ErrorAction SilentlyContinue
+                } catch {}
+                if($result) {
+                    $result = Set-CrmRecord -conn $conn -EntityLogicalName $entity -Id $id -Fields $record
+                }
+                else {
+                    $result = New-CrmRecord -conn $conn -Fields $record -EntityLogicalName $entity
+                }
             }
 
             if($action -eq "update") {
-                $record.Remove($record[$pkfield])
-                Set-CrmRecord -conn $conn -Fields $record -EntityLogicalName $entity -Id $id
+                $result = Set-CrmRecord -conn $conn -Fields $record -EntityLogicalName $entity -Id $id
             }
 
             if($action -eq "delete") {
-                Remove-CrmRecord -conn $conn -EntityLogicalName $entity -Id $id
+                $result = Remove-CrmRecord -conn $conn -EntityLogicalName $entity -Id $id
             }
         }
         Catch {
             Write-Warning $_.Exception.Message
+            Write-Warning $_.ScriptStackTrace
         }
         
     }
